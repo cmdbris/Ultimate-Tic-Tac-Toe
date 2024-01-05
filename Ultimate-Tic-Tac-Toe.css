@@ -24,7 +24,8 @@ table.inner-game-table > tbody > tr > td.inner-game-table-cell {
 
 table.outer-game-table,
 table.inner-game-table {
-    margin: 5px auto;
+    border-collapse: collapse;
+    margin: 6px auto;
 }
 
 .vertical-border {
@@ -36,7 +37,6 @@ table.inner-game-table {
     border-top: 2px solid black;
     border-bottom: 2px solid black;
 }
-
 
 /* Outer Game Table Attributes */
 
@@ -77,9 +77,8 @@ table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
     outline-style: solid;
     outline-width: 2px;
     outline-color: black;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
 }
 table.inner-game-table.zoomed {
     transform: scale(2);
-    backdrop-filter: blur(2px);
 }
