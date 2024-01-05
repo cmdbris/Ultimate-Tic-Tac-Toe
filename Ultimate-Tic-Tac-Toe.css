@@ -15,11 +15,21 @@ body {
 table.outer-game-table > tbody > tr > td.outer-game-table-cell {
     width: 150px;
     height: 150px;
+    user-select: none;
+    text-align: center;
+    line-height: 150px;
+    font-size: 30px;
+    color: var(--outer-game-table-cell-symbol-color);
 }
 
 table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     width: 20px;
     height: 20px;
+    user-select: none;
+    text-align: center;
+    line-height: 20px;
+    font-size: 30px;
+    color: var(--inner-game-table-cell-symbol-color);
 }
 
 table.outer-game-table,

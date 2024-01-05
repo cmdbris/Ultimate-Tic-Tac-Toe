@@ -5,11 +5,17 @@ let innerTableCell = document.querySelectorAll('.inner-game-table');
 // also works instead of using 
 // document.querySelectorAll(".someClass").forEach {
 
+// Event Listeners for Outer and Inner Table Cells
+
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
         toggleZoom(this);
     });
 });
+
+
+// Functions for Outer and Inner Table Cells
+
 
 function toggleZoom(outerCell) {
     outerCell.classList.toggle('zoomed');
