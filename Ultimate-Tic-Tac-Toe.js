@@ -5,11 +5,21 @@ let innerTableCell = document.querySelectorAll('.inner-game-table');
 // also works instead of using 
 // document.querySelectorAll(".someClass").forEach {
 
-outerTableCell.forEach(cell => {
-    cell.addEventListener('click', function (event) {
-        event.target.classList.toggle('zoomed');
+outerTableCell.forEach(outerCell => {
+    outerCell.addEventListener('click', function () {
+        toggleZoom(this);
+    });
+});
 
-        let innerTable = this.querySelector('.inner-game-table');
-        innerTable.classList.toggle('zoomed');
-    })
-})
+function toggleZoom(outerCell) {
+    outerCell.classList.toggle('zoomed');
+    let innerTable = outerCell.querySelector('.inner-game-table');
+    innerTable.classList.toggle('zoomed');
+    outerTableCell.forEach(otherOuterCell => {
+        if (otherOuterCell !== outerCell) {
+            otherOuterCell.classList.remove('zoomed');
+            let otherInnerTable = otherOuterCell.querySelector('.inner-game-table');
+            otherInnerTable.classList.remove('zoomed');
+        }
+    });
+}

@@ -15,13 +15,11 @@ body {
 table.outer-game-table > tbody > tr > td.outer-game-table-cell {
     width: 150px;
     height: 150px;
-    background-color: aqua;
 }
 
 table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     width: 20px;
     height: 20px;
-    background-color: brown;
 }
 
 table.outer-game-table,
@@ -50,18 +48,38 @@ table.inner-game-table {
     transform: translate(-50%, -50%);
 }
 
+table.outer-game-table > tbody > tr > td.outer-game-table-cell {
+    outline-style: solid;
+    outline-width: 0px;
+    outline-color: white;
+    transform-origin: center center; /* Center the zoom around the middle */
+    transition: all 1000ms ease-in-out;
+}
+
+table.inner-game-table {
+    transform-origin: center center;
+    transition: all 1000ms ease-in-out;
+}
+
 
 /* Inner Game Table Attributes */
 
 
-
-
-table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed, table.inner-game-table.zoomed {
+/* .zoomed {
+    outline: 2px solid black;
+    backdrop-filter: blur(2px);
+    border-width: 1px;
     transform: scale(2);
-    transition: transform 0.3s ease;
-}
-
-/* td.outer-game-table-cell.zoomed, table.inner-game-table.zoomed {
-    transform: scale(2);
-    transition: transform 0.3s ease;
 } */
+
+table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
+    transform: scale(2);
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: black;
+    backdrop-filter: blur(2px);
+}
+table.inner-game-table.zoomed {
+    transform: scale(2);
+    backdrop-filter: blur(2px);
+}
