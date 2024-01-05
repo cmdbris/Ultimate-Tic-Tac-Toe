@@ -1,0 +1,67 @@
+/* Default Page Attributes */
+
+
+html,
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Default Tic Tac Toe Board Look */
+
+
+table.outer-game-table > tbody > tr > td.outer-game-table-cell {
+    width: 150px;
+    height: 150px;
+    background-color: aqua;
+}
+
+table.inner-game-table > tbody > tr > td.inner-game-table-cell {
+    width: 20px;
+    height: 20px;
+    background-color: brown;
+}
+
+table.outer-game-table,
+table.inner-game-table {
+    margin: 5px auto;
+}
+
+.vertical-border {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.horizontal-border {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+
+/* Outer Game Table Attributes */
+
+
+.game-table-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Inner Game Table Attributes */
+
+
+
+
+table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed, table.inner-game-table.zoomed {
+    transform: scale(2);
+    transition: transform 0.3s ease;
+}
+
+/* td.outer-game-table-cell.zoomed, table.inner-game-table.zoomed {
+    transform: scale(2);
+    transition: transform 0.3s ease;
+} */
