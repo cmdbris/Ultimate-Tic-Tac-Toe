@@ -109,3 +109,11 @@ table.inner-game-table.zoomed {
     transition: opacity 500ms;
     opacity: 0;
 }
+
+
+/* Disabler Class for Javascript */
+
+
+.disable {
+    display: none;
+}

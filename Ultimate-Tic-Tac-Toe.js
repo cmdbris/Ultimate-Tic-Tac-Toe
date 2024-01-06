@@ -10,19 +10,15 @@ let errorMessage = document.querySelector('.error-message');
 let outerTableCell = document.querySelectorAll('.outer-game-table-cell');
 let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 
-function handleClick() {
-    placeSymbol(selectedOuterCell, selectedInnerCell, handleClick);
-}
-
 outerTableCell.forEach(outerCell => {
-    outerCell.addEventListener('click', function () {
+    outerCell.addEventListener('click', () => {
         toggleZoom(outerCell);
     });
 
     outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
-        innerCell.addEventListener('click', function handleClick() {
+        innerCell.addEventListener('click', () => {
             if (outerCell.classList.contains('zoomed')) {
-                placeSymbol(outerCell, this, handleClick);
+                placeSymbol(outerCell, this);
             }
         });
     });
@@ -66,7 +62,7 @@ let player_1_turn = true;
 let player_2_turn = false;
 let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
-function placeSymbol(outerCell, innerCell, handleClick) {
+function placeSymbol(outerCell, innerCell) {
 
     let [outerCell_row, outerCell_column] = extractRowColumn(outerCell.id.toString());
     let [innerCell_row, innerCell_column] = extractRowColumn(innerCell.id.toString());
