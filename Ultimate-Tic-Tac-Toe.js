@@ -11,12 +11,12 @@ let outerTableCell = document.querySelectorAll('.outer-game-table-cell');
 let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 
 outerTableCell.forEach(outerCell => {
-    outerCell.addEventListener('click', () => {
+    outerCell.addEventListener('click', function () {
         toggleZoom(outerCell);
     });
 
     outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
-        innerCell.addEventListener('click', () => {
+        innerCell.addEventListener('click', function () {
             if (outerCell.classList.contains('zoomed')) {
                 placeSymbol(outerCell, this);
             }
