@@ -16,20 +16,13 @@ function handleClick() {
 
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
-        let selectedOuterCell = this;
-        toggleZoom(selectedOuterCell);
+        toggleZoom(outerCell);
+    });
 
-        // Remove event listener from all innerTableCells
-        innerTableCell.forEach(innerCell => {
-            innerCell.removeEventListener('click', handleClick);
-        });
-
-        // Add event listener for innerTableCells of the clicked outerTableCell
-        outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
-            innerCell.addEventListener('click', function handleClick() {
-                let selectedInnerCell = this;
-                placeSymbol(selectedOuterCell, selectedInnerCell, handleClick);
-            });
+    outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
+        innerCell.addEventListener('click', function handleClick() {
+            if (!outerCell.classList.contains('zoomed')) {return;}
+            placeSymbol(outerCell, this, handleClick);
         });
     });
 });
@@ -53,17 +46,14 @@ function toggleZoom(outerCell) {
 
 // Arrays to keep track of position history
 
-const empty_2d_table = [['', '', ''], ['', '', ''], ['', '', '']];
-
-
-let outerCell_position_history = [...empty_2d_table];
-let innerCell_position_history = [...empty_2d_table];
+let outerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
+let innerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
 let innerTable_position_history = [];
 
 for (let i = 0; i < 3; i++) {
     innerTable_position_history[i] = [];  // Initialize inner arrays
     for (let j = 0; j < 3; j++) {
-        innerTable_position_history[i][j] = [...empty_2d_table];
+        innerTable_position_history[i][j] = [['', '', ''], ['', '', ''], ['', '', '']];
     }
 }
 
@@ -98,7 +88,6 @@ function placeSymbol(outerCell, innerCell, handleClick) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        // innerCell.removeEventListener('click', handleClick);
     }
 }
 
