@@ -5,7 +5,9 @@
 // Event Listeners for Outer and Inner Table Cells
 
 
-let outerTableCell = document.querySelectorAll('td.outer-game-table-cell');
+let errorMessage = document.querySelector('.error-message');
+
+let outerTableCell = document.querySelectorAll('.outer-game-table-cell');
 let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 
 function handleClick() {
@@ -78,7 +80,14 @@ function placeSymbol(outerCell, innerCell, handleClick) {
     let [outerCell_row, outerCell_column] = extractRowColumn(outerCell.id.toString());
     let [innerCell_row, innerCell_column] = extractRowColumn(innerCell.id.toString());
 
-    if (innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] === '') {
+    if (innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] !== ''){
+        errorMessage.innerHTML = 'ERROR: ' + 'This space is already occupied by ' + innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column];
+        errorMessage.style.opacity = "1";
+        setTimeout(() => {
+            errorMessage.style.opacity = "0";
+        }, 2000);
+    }
+    else if (innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] === '') {
         if (player_1_turn) {
             innerCell.innerHTML = symbols['x'];
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'x';
@@ -89,7 +98,7 @@ function placeSymbol(outerCell, innerCell, handleClick) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        innerCell.removeEventListener('click', handleClick);
+        // innerCell.removeEventListener('click', handleClick);
     }
 }
 

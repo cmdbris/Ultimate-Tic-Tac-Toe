@@ -74,14 +74,6 @@ table.inner-game-table {
 
 /* Inner Game Table Attributes */
 
-
-/* .zoomed {
-    outline: 2px solid black;
-    backdrop-filter: blur(2px);
-    border-width: 1px;
-    transform: scale(2);
-} */
-
 table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
     transform: scale(2);
     outline-style: solid;
@@ -89,6 +81,30 @@ table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
     outline-color: black;
     backdrop-filter: blur(3px);
 }
+
 table.inner-game-table.zoomed {
     transform: scale(2);
+}
+
+
+/* Error Message Class for Javascript */
+
+
+.error-message {
+    position: absolute;
+    left: 50%;
+    top: 85%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 80px;
+    border-radius: 10px;
+    background-color: rgb(253, 80, 80);
+    border: 2px solid black;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 80px;
+    transition: opacity 500ms;
+    opacity: 0;
 }
