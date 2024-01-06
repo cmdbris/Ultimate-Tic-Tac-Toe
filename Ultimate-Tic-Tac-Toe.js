@@ -53,17 +53,14 @@ function toggleZoom(outerCell) {
 
 // Arrays to keep track of position history
 
-const empty_2d_table = [['', '', ''], ['', '', ''], ['', '', '']];
-
-
-let outerCell_position_history = [...empty_2d_table];
-let innerCell_position_history = [...empty_2d_table];
+let outerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
+let innerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
 let innerTable_position_history = [];
 
 for (let i = 0; i < 3; i++) {
     innerTable_position_history[i] = [];  // Initialize inner arrays
     for (let j = 0; j < 3; j++) {
-        innerTable_position_history[i][j] = [...empty_2d_table];
+        innerTable_position_history[i][j] = [['', '', ''], ['', '', ''], ['', '', '']];
     }
 }
 
