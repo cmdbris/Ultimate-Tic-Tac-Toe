@@ -95,6 +95,7 @@ table.inner-game-table.zoomed {
     left: 50%;
     top: 85%;
     transform: translateX(-50%);
+    user-select: none;
     width: 600px;
     height: 80px;
     border-radius: 10px;
