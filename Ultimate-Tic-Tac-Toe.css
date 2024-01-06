@@ -9,6 +9,15 @@ body {
 }
 
 
+/* Default attributes */
+
+
+:root {
+    --outer-game-table-cell-symbol-color: black;
+    --inner-game-table-cell-symbol-color: black;
+}
+
+
 /* Default Tic Tac Toe Board Look */
 
 

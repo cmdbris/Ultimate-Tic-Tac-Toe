@@ -2,6 +2,12 @@
 // also works instead of using 
 // document.querySelectorAll(".someClass").forEach {
 
+// Get Root Styles from CSS
+
+
+let rootStyles = document.querySelector(':root');
+
+
 // Event Listeners for Outer and Inner Table Cells
 
 
@@ -77,10 +83,12 @@ function placeSymbol(outerCell, innerCell) {
     else if (innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] === '') {
         if (player_1_turn) {
             innerCell.innerHTML = symbols['x'];
+            innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(255, 82, 82)');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'x';
         }
         if (player_2_turn) {
             innerCell.innerHTML = symbols['o'];
+            innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(73, 205, 245)');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'o';
         }
         player_1_turn = !player_1_turn;
