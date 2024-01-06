@@ -16,20 +16,13 @@ function handleClick() {
 
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
-        let selectedOuterCell = this;
-        toggleZoom(selectedOuterCell);
+        toggleZoom(outerCell);
+    });
 
-        // Remove event listener from all innerTableCells
-        innerTableCell.forEach(innerCell => {
-            innerCell.removeEventListener('click', handleClick);
-        });
-
-        // Add event listener for innerTableCells of the clicked outerTableCell
-        outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
-            innerCell.addEventListener('click', function handleClick() {
-                let selectedInnerCell = this;
-                placeSymbol(selectedOuterCell, selectedInnerCell, handleClick);
-            });
+    outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
+        innerCell.addEventListener('click', function handleClick() {
+            if (!outerCell.classList.contains('zoomed')) {return;}
+            placeSymbol(outerCell, this, handleClick);
         });
     });
 });
@@ -95,7 +88,6 @@ function placeSymbol(outerCell, innerCell, handleClick) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        // innerCell.removeEventListener('click', handleClick);
     }
 }
 
