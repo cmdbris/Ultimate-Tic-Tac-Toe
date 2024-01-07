@@ -84,11 +84,13 @@ function placeSymbol(outerCell, innerCell) {
         if (player_1_turn) {
             innerCell.innerHTML = symbols['x'];
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(255, 82, 82)');
+            innerCell.style.setProperty('--symbol-font-weight', 'bolder');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'x';
         }
         if (player_2_turn) {
             innerCell.innerHTML = symbols['o'];
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(73, 205, 245)');
+            innerCell.style.setProperty('--symbol-font-weight', 'normal');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'o';
         }
         player_1_turn = !player_1_turn;

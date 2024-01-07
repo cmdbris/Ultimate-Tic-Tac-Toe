@@ -15,6 +15,7 @@ body {
 :root {
     --outer-game-table-cell-symbol-color: black;
     --inner-game-table-cell-symbol-color: black;
+    --symbol-font-weight: normal;
 }
 
 
@@ -38,6 +39,7 @@ table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     text-align: center;
     line-height: 20px;
     font-size: 30px;
+    font-weight: var(--symbol-font-weight);
     color: var(--inner-game-table-cell-symbol-color);
 }
 
