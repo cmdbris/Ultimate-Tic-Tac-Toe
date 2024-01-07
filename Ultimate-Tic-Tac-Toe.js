@@ -5,10 +5,13 @@
 // Get Root Styles from CSS
 
 
+
 let rootStyles = document.querySelector(':root');
 
 
+
 // Sets Player Turns and Maps Symbols to HTML Code
+
 
 
 let player_1_turn = true;
@@ -16,7 +19,9 @@ let player_2_turn = false;
 let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 
+
 // Event Listeners for Outer and Inner Table Cells
+
 
 
 let errorMessage = document.querySelector('.error-message');
@@ -52,7 +57,9 @@ outerTableCell.forEach(outerCell => {
 });
 
 
+
 // Function for Zooming onto Inner Table
+
 
 
 function toggleZoom(outerCell) {
@@ -68,7 +75,11 @@ function toggleZoom(outerCell) {
     });
 }
 
+
+
 // Arrays to keep track of position history
+
+
 
 let outerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
 let innerCell_position_history = [['', '', ''], ['', '', ''], ['', '', '']];
@@ -82,7 +93,9 @@ for (let i = 0; i < 3; i++) {
 }
 
 
+
 // Function for Placing Game Symbol and turn changing
+
 
 
 function placeSymbol(outerCell, innerCell) {
@@ -112,31 +125,59 @@ function placeSymbol(outerCell, innerCell) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
+        let checkResult = check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
+        console.log(checkResult.result, 'via', checkResult.type, 'with winning coords:', checkResult.winningCoords);
     }
 }
 
 
-// Function to Check for Player Victory or Tie
+
+// Function to Check for Player Victory, Tie, or Ongoing Match, and Returns an Object Containing the Winner, the Type of Victory, and the Winning Coordinates
+
 
 
 function check_InnerTableWin(innerTable_position_history) {
-    // console.log(innerTable_position_history[2][2]);
-    oneDimensional = FlattenArrayDimension(innerTable_position_history);
-    console.log(oneDimensional);
-    let victoryType = { 0: 'horizontal', 1: 'diagonal', 2: 'vertical' }
+    let flattened_innerTable_position_history = FlattenArrayDimension(innerTable_position_history);
     let winningCoordinates = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7],
-        [2, 5, 8], [0, 4, 8], [2, 4, 6]
-    ];
-    for (i = 0; i < 3; i++) {
+        ['horizontal', 0, 1, 2],
+        ['horizontal', 3, 4, 5],
+        ['horizontal', 6, 7, 8],
 
+        ['vertical', 0, 3, 6],
+        ['vertical', 1, 4, 7],
+        ['vertical', 2, 5, 8],
+
+        ['diagonal', 0, 4, 8],
+        ['diagonal', 2, 4, 6]
+    ];
+    for (let i = 0; i < winningCoordinates.length; i++) {
+        let [victoryType, coord1, coord2, coord3] = winningCoordinates[i];
+        if (flattened_innerTable_position_history[coord1] === 'x' && flattened_innerTable_position_history[coord2] === 'x' && flattened_innerTable_position_history[coord3] === 'x') {
+            return { result: 'x wins', type: victoryType, winningCoords: [coord1, coord2, coord3] };
+        } else if (flattened_innerTable_position_history[coord1] === 'o' && flattened_innerTable_position_history[coord2] === 'o' && flattened_innerTable_position_history[coord3] === 'o') {
+            return { result: 'o wins', type: victoryType, winningCoords: [coord1, coord2, coord3] };
+        }
     }
+
+    // Check for a tie (no empty spaces left)
+    if (!flattened_innerTable_position_history.includes('')) {
+        return { result: 'Tie', type: 'TIE' };
+    }
+
+    // If none of the above conditions are met, the game is still ongoing
+    return { result: 'Ongoing', type: 'ONGOING' };
+
+    // example usage
+    // const innerTablePositionHistory = [['X', 'O', 'X'], ['O', 'X', 'O'], ['X', 'X', 'O']];
+    // const checkResult = check_InnerTableWin(innerTablePositionHistory);
+    // console.log(checkResult.result, 'via', checkResult.victoryType, 'with winning coords:', checkResult.winningCoords);
+
 }
 
 
+
 // Auxiliary Functions to Support Other Functions
+
 
 
 function extractRowColumn(cellId) {
@@ -160,35 +201,3 @@ function FlattenArrayDimension(Array2D) {
     // Alternatively
     // return [].concat(...Array2D);
 }
-
-
-// gamestate TicTacToe::check_win(char board_info[9]) {
-//     gamestate state;
-//     int empty_spaces = 0;
-//     int winning_coordinates[8][3] = {
-//         {0, 1, 2},
-//         {3, 4, 5},
-//         {6, 7, 8},
-//         {0, 3, 6},
-//         {1, 4, 7},
-//         {2, 5, 8},
-//         {0, 4, 8},
-//         {2, 4, 6}
-//     };
-
-//     for (int i = 0; i < 8; i++) {                                                   // Checks if either player has winning coordinates combination
-//         char coord_1 = board_info[winning_coordinates[i][0]];
-//         char coord_2 = board_info[winning_coordinates[i][1]];
-//         char coord_3 = board_info[winning_coordinates[i][2]];
-//         if (coord_1 == 'X' && coord_2 == 'X' && coord_3 == 'X') {
-//             return PLAYER_1_WINS;
-//         }
-//         else if (coord_1 == 'O' && coord_2 == 'O' && coord_3 == 'O') {
-//             return PLAYER_2_WINS;
-//         }
-//         else if (board_info[i] == ' ') {
-//             empty_spaces++;
-//         }
-//     }
-//     return state = (empty_spaces == 0) ? state = TIE : state = ONGOING;             // If there are no empty spaces on the board and no one has won, the players are tied
-// }
