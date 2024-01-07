@@ -31,7 +31,9 @@ outerTableCell.forEach(outerCell => {
 
     outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
         innerCell.addEventListener('mouseover', function () {
-            if (outerCell.classList.contains('zoomed')) {
+            let [outerCell_row, outerCell_column] = extractRowColumn(outerCell.id.toString());
+            let [innerCell_row, innerCell_column] = extractRowColumn(innerCell.id.toString());
+            if (outerCell.classList.contains('zoomed') && innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] === '') {
                 if (player_1_turn) {
                     innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(255, 82, 82, 0.5)');
                 }

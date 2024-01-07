@@ -81,16 +81,16 @@ table.outer-game-table > tbody > tr > td.outer-game-table-cell {
     transition: all 1000ms ease-in-out;
 }
 
-table.inner-game-table {
-    transform-origin: center center;
-    transition: all 1000ms ease-in-out;
-}
-
 
 
 /* Inner Game Table Attributes */
 
 
+
+table.inner-game-table {
+    transform-origin: center center; /* Center the zoom around the middle */
+    transition: all 1000ms ease-in-out;
+}
 
 table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     font-weight: var(--symbol-font-weight);
