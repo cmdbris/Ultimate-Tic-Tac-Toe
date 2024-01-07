@@ -112,8 +112,29 @@ function placeSymbol(outerCell, innerCell) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
+        check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
     }
 }
+
+
+// Function to Check for Player Victory or Tie
+
+
+function check_InnerTableWin(innerTable_position_history) {
+    // console.log(innerTable_position_history[2][2]);
+    oneDimensional = FlattenArrayDimension(innerTable_position_history);
+    console.log(oneDimensional);
+    let victoryType = { 0: 'horizontal', 1: 'diagonal', 2: 'vertical' }
+    let winningCoordinates = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7],
+        [2, 5, 8], [0, 4, 8], [2, 4, 6]
+    ];
+    for (i = 0; i < 3; i++) {
+
+    }
+}
+
 
 // Auxiliary Functions to Support Other Functions
 
@@ -126,3 +147,48 @@ function extractRowColumn(cellId) {
     let column = parseInt(cellId[cellId.length - 1]) - 1;
     return [row, column];
 }
+
+function FlattenArrayDimension(Array2D) {
+    // Converts 2D arrays into 1D arrays
+    let Array1D = [];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            Array1D.push(Array2D[i][j])
+        }
+    }
+    return Array1D;
+    // Alternatively
+    // return [].concat(...Array2D);
+}
+
+
+// gamestate TicTacToe::check_win(char board_info[9]) {
+//     gamestate state;
+//     int empty_spaces = 0;
+//     int winning_coordinates[8][3] = {
+//         {0, 1, 2},
+//         {3, 4, 5},
+//         {6, 7, 8},
+//         {0, 3, 6},
+//         {1, 4, 7},
+//         {2, 5, 8},
+//         {0, 4, 8},
+//         {2, 4, 6}
+//     };
+
+//     for (int i = 0; i < 8; i++) {                                                   // Checks if either player has winning coordinates combination
+//         char coord_1 = board_info[winning_coordinates[i][0]];
+//         char coord_2 = board_info[winning_coordinates[i][1]];
+//         char coord_3 = board_info[winning_coordinates[i][2]];
+//         if (coord_1 == 'X' && coord_2 == 'X' && coord_3 == 'X') {
+//             return PLAYER_1_WINS;
+//         }
+//         else if (coord_1 == 'O' && coord_2 == 'O' && coord_3 == 'O') {
+//             return PLAYER_2_WINS;
+//         }
+//         else if (board_info[i] == ' ') {
+//             empty_spaces++;
+//         }
+//     }
+//     return state = (empty_spaces == 0) ? state = TIE : state = ONGOING;             // If there are no empty spaces on the board and no one has won, the players are tied
+// }
