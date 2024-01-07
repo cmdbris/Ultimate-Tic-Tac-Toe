@@ -16,7 +16,10 @@ body {
     --outer-game-table-cell-symbol-color: black;
     --inner-game-table-cell-symbol-color: black;
     --symbol-font-weight: normal;
-    --inner-cell-hover-color: rgba(0, 0, 0, 0);;
+    --inner-cell-hover-color: rgba(0, 0, 0, 0);
+    --winning-line-angle: 0deg;
+    --winning-line-x-translation: 0px;
+    --winning-line-y-translation: 0px;
 }
 
 
@@ -88,6 +91,7 @@ table.outer-game-table > tbody > tr > td.outer-game-table-cell {
 
 
 table.inner-game-table {
+    z-index: 1;
     transform-origin: center center; /* Center the zoom around the middle */
     transition: all 1000ms ease-in-out;
 }
@@ -118,6 +122,32 @@ table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
 
 table.inner-game-table.zoomed {
     transform: scale(2);
+}
+
+
+
+/* Winning Line Classes Added by Javascript */
+
+
+
+div.winning-line-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.horizontal-winning-line {
+    position: relative;
+    left: var(--winning-line-x-translation);
+    top: var(--winning-line-y-translation);
+    transform-origin: center center;
+    width: 70px;
+    height: 2px;
+    border-radius: 1px;
+    z-index: 3;
+    background-color: yellow;
+    transform: rotate(var(--winning-line-angle));
 }
 
 

@@ -125,8 +125,12 @@ function placeSymbol(outerCell, innerCell) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        let checkResult = check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
-        console.log(checkResult.result, 'via', checkResult.type, 'with winning coords:', checkResult.winningCoords);
+        let matchResult = check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
+        console.log(matchResult.result, 'via', matchResult.type, 'with winning coords:', matchResult.winningCoords);
+        if (matchResult.result === 'x' || matchResult.result === 'o') {
+            alert(matchResult.result);
+            drawWinningLine(outerCell, innerCell, matchResult);
+        }
     }
 }
 
@@ -153,9 +157,9 @@ function check_InnerTableWin(innerTable_position_history) {
     for (let i = 0; i < winningCoordinates.length; i++) {
         let [victoryType, coord1, coord2, coord3] = winningCoordinates[i];
         if (flattened_innerTable_position_history[coord1] === 'x' && flattened_innerTable_position_history[coord2] === 'x' && flattened_innerTable_position_history[coord3] === 'x') {
-            return { result: 'x wins', type: victoryType, winningCoords: [coord1, coord2, coord3] };
+            return { result: 'x', type: victoryType, winningCoords: [coord1, coord2, coord3] };
         } else if (flattened_innerTable_position_history[coord1] === 'o' && flattened_innerTable_position_history[coord2] === 'o' && flattened_innerTable_position_history[coord3] === 'o') {
-            return { result: 'o wins', type: victoryType, winningCoords: [coord1, coord2, coord3] };
+            return { result: 'o', type: victoryType, winningCoords: [coord1, coord2, coord3] };
         }
     }
 
@@ -169,9 +173,34 @@ function check_InnerTableWin(innerTable_position_history) {
 
     // example usage
     // const innerTablePositionHistory = [['X', 'O', 'X'], ['O', 'X', 'O'], ['X', 'X', 'O']];
-    // const checkResult = check_InnerTableWin(innerTablePositionHistory);
-    // console.log(checkResult.result, 'via', checkResult.victoryType, 'with winning coords:', checkResult.winningCoords);
+    // const matchResult = check_InnerTableWin(innerTablePositionHistory);
+    // console.log(matchResult.result, 'via', matchResult.victoryType, 'with winning coords:', matchResult.winningCoords);
 
+}
+
+
+
+// Function to draw the Winning Line
+
+
+
+function drawWinningLine(outerCell, innerCell, matchResult) {
+    let innerTable = outerCell.querySelector('.inner-game-table');
+
+    let centredContainer = document.createElement('div');
+    let winningLine = document.createElement('div');
+    
+    centredContainer.classList.add('winning-line-container');
+    winningLine.classList.add('horizontal-winning-line');
+    // let centerX = innerTable.offsetWidth / 2 - winningLine.offsetWidth / 2;
+    // let centerY = innerTable.offsetHeight / 2 - winningLine.offsetHeight / 2;
+    
+    // Set the position relative to the center
+    // winningLine.style.left = centerX + 'px';
+    // winningLine.style.top = centerY + 'px';
+    
+    centredContainer.appendChild(winningLine);
+    innerTable.appendChild(centredContainer);
 }
 
 
