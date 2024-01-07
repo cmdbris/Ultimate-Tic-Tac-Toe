@@ -8,6 +8,14 @@
 let rootStyles = document.querySelector(':root');
 
 
+// Sets Player Turns and Maps Symbols to HTML Code
+
+
+let player_1_turn = true;
+let player_2_turn = false;
+let symbols = { 'x': '&#215;', 'o': '&#9900;' };
+
+
 // Event Listeners for Outer and Inner Table Cells
 
 
@@ -22,8 +30,19 @@ outerTableCell.forEach(outerCell => {
     });
 
     outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
+        innerCell.addEventListener('mouseover', function () {
+            if (outerCell.classList.contains('zoomed')) {
+                if (player_1_turn) {
+                    innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(255, 82, 82, 0.5)');
+                }
+                if (player_2_turn) {
+                    innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(73, 205, 245, 0.5)');
+                }
+            }
+        });
         innerCell.addEventListener('click', function () {
             if (outerCell.classList.contains('zoomed')) {
+                innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(0, 0, 0, 0)');
                 placeSymbol(outerCell, this);
             }
         });
@@ -63,10 +82,6 @@ for (let i = 0; i < 3; i++) {
 
 // Function for Placing Game Symbol and turn changing
 
-
-let player_1_turn = true;
-let player_2_turn = false;
-let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 function placeSymbol(outerCell, innerCell) {
 

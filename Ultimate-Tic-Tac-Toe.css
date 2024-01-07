@@ -16,6 +16,7 @@ body {
     --outer-game-table-cell-symbol-color: black;
     --inner-game-table-cell-symbol-color: black;
     --symbol-font-weight: normal;
+    --inner-cell-hover-color: rgba(0, 0, 0, 0);;
 }
 
 
@@ -94,6 +95,11 @@ table.inner-game-table {
 table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     font-weight: var(--symbol-font-weight);
     color: var(--inner-game-table-cell-symbol-color);
+    transition: background-color 500ms;
+}
+
+table.inner-game-table > tbody > tr > td.inner-game-table-cell:hover {
+    background-color: var(--inner-cell-hover-color);
 }
 
 
