@@ -17,6 +17,7 @@ body {
     --inner-game-table-cell-symbol-color: black;
     --symbol-font-weight: normal;
     --inner-cell-hover-color: rgba(0, 0, 0, 0);
+    --winning-line-color: black;
     --winning-line-angle: 0deg;
     --winning-line-x-translation: 0px;
     --winning-line-y-translation: 0px;
@@ -137,17 +138,19 @@ div.winning-line-container {
     transform: translate(-50%, -50%);
 }
 
-div.horizontal-winning-line {
+div.winning-line {
     position: relative;
-    left: var(--winning-line-x-translation);
-    top: var(--winning-line-y-translation);
-    transform-origin: center center;
-    width: 70px;
+    width: 0px;
     height: 2px;
-    border-radius: 1px;
+    border: 0.25px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
     z-index: 3;
-    background-color: yellow;
+    transform-origin: center center;
     transform: rotate(var(--winning-line-angle));
+    left: var(--winning-line-x-translation);
+    bottom: var(--winning-line-y-translation);
+    background-color: var(--winning-line-color);
+    transition: width 2000ms;
 }
 
 

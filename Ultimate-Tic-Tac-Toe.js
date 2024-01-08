@@ -128,8 +128,7 @@ function placeSymbol(outerCell, innerCell) {
         let matchResult = check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
         console.log(matchResult.result, 'via', matchResult.type, 'with winning coords:', matchResult.winningCoords);
         if (matchResult.result === 'x' || matchResult.result === 'o') {
-            alert(matchResult.result);
-            drawWinningLine(outerCell, innerCell, matchResult);
+            drawWinningLine(outerCell, matchResult.result, matchResult.type, matchResult.winningCoords);
         }
     }
 }
@@ -184,23 +183,58 @@ function check_InnerTableWin(innerTable_position_history) {
 
 
 
-function drawWinningLine(outerCell, innerCell, matchResult) {
+function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
     let innerTable = outerCell.querySelector('.inner-game-table');
 
+    // let centredContainer = document.querySelector('.winning-line-container');
+    // let winningLine = document.querySelector('.winning-line');
+
     let centredContainer = document.createElement('div');
-    let winningLine = document.createElement('div');
-    
     centredContainer.classList.add('winning-line-container');
-    winningLine.classList.add('horizontal-winning-line');
-    // let centerX = innerTable.offsetWidth / 2 - winningLine.offsetWidth / 2;
-    // let centerY = innerTable.offsetHeight / 2 - winningLine.offsetHeight / 2;
-    
-    // Set the position relative to the center
-    // winningLine.style.left = centerX + 'px';
-    // winningLine.style.top = centerY + 'px';
-    
+
+    let winningLine = document.createElement('div');
+    winningLine.classList.add('winning-line');
+
+    if (winner === 'x') {
+        winningLine.style.setProperty('--winning-line-color', 'rgb(255, 82, 82)');
+    }
+    else if (winner === 'o') {
+        winningLine.style.setProperty('--winning-line-color', 'rgb(73, 205, 245)');
+    }
+
+    if (victoryType === 'horizontal') {
+        winningLine.style.setProperty('--winning-line-angle', '0deg');
+        if (winningCoords[0] === 0) {
+            winningLine.style.setProperty('--winning-line-y-translation', '25px');
+        }
+        else if (winningCoords[0] === 6) {
+            winningLine.style.setProperty('--winning-line-y-translation', '-25px');
+        }
+    }
+    else if (victoryType === 'vertical') {
+        winningLine.style.setProperty('--winning-line-angle', '90deg');
+        if (winningCoords[0] === 0) {
+            winningLine.style.setProperty('--winning-line-x-translation', '-25px');
+        }
+        else if (winningCoords[0] === 2) {
+            winningLine.style.setProperty('--winning-line-x-translation', '25px');
+        }
+    }
+    else if (victoryType === 'diagonal') {
+        if (winningCoords[0] === 0) {
+            winningLine.style.setProperty('--winning-line-angle', '45deg');
+        }
+        else if (winningCoords[0] === 2) {
+            winningLine.style.setProperty('--winning-line-angle', '-45deg');
+        }
+    }
+
     centredContainer.appendChild(winningLine);
     innerTable.appendChild(centredContainer);
+    setTimeout(() => {
+        winningLine.style.width = '70px';
+    }, 10);
+    
 }
 
 
