@@ -150,7 +150,7 @@ div.winning-line {
     left: var(--winning-line-x-translation);
     bottom: var(--winning-line-y-translation);
     background-color: var(--winning-line-color);
-    transition: width 2000ms;
+    transition: width 500ms ease-in;
 }
 
 
