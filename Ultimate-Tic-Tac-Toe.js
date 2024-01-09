@@ -231,10 +231,17 @@ function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
 
     centredContainer.appendChild(winningLine);
     innerTable.appendChild(centredContainer);
+    
     setTimeout(() => {
         winningLine.style.width = '70px';
     }, 10);
-    
+    setTimeout(() => {
+        outerCell.classList.remove('zoomed');
+        innerTable.classList.remove('zoomed');
+    }, 2000);
+    // setTimeout(() => {
+    //     innerTable.remove();
+    // }, 4000);
 }
 
 
