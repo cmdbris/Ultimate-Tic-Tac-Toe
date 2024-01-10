@@ -31,7 +31,9 @@ let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
+        if (!outerCell.classList.contains('winning-cell')) {
         toggleZoom(outerCell);
+        }
     });
 
     outerCell.querySelectorAll('.inner-game-table-cell').forEach(innerCell => {
@@ -48,7 +50,7 @@ outerTableCell.forEach(outerCell => {
             }
         });
         innerCell.addEventListener('click', function () {
-            if (outerCell.classList.contains('zoomed')) {
+            if (outerCell.classList.contains('zoomed') && !outerCell.classList.contains('winning-cell')) {
                 innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(0, 0, 0, 0)');
                 placeSymbol(outerCell, this);
             }
@@ -63,13 +65,13 @@ outerTableCell.forEach(outerCell => {
 
 
 function toggleZoom(outerCell) {
-    outerCell.classList.add('zoomed');
     let innerTable = outerCell.querySelector('.inner-game-table');
+    outerCell.classList.add('zoomed');
     innerTable.classList.add('zoomed');
     outerTableCell.forEach(otherOuterCell => {
         if (otherOuterCell !== outerCell) {
-            otherOuterCell.classList.remove('zoomed');
             let otherInnerTable = otherOuterCell.querySelector('.inner-game-table');
+            otherOuterCell.classList.remove('zoomed');
             otherInnerTable.classList.remove('zoomed');
         }
     });
@@ -125,10 +127,20 @@ function placeSymbol(outerCell, innerCell) {
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
-        let matchResult = check_InnerTableWin(innerTable_position_history[outerCell_row][outerCell_column]);
-        console.log(matchResult.result, 'via', matchResult.type, 'with winning coords:', matchResult.winningCoords);
-        if (matchResult.result === 'x' || matchResult.result === 'o') {
-            drawWinningLine(outerCell, matchResult.result, matchResult.type, matchResult.winningCoords);
+
+        let inner_matchResult = check_TableWin(innerTable_position_history[outerCell_row][outerCell_column]);
+
+        if (inner_matchResult.result === 'x' || inner_matchResult.result === 'o') {
+            console.log(inner_matchResult.result, 'via', inner_matchResult.type, 'with winning coords:', inner_matchResult.winningCoords);
+            draw_innerTable_WinningLine(outerCell, inner_matchResult.result, inner_matchResult.type, inner_matchResult.winningCoords);
+            outerCell_position_history[outerCell_row][outerCell_column] = inner_matchResult.result;
+
+            let outer_matchResult = check_TableWin(outerCell_position_history);
+
+            if (outer_matchResult.result === 'x' || outer_matchResult.result === 'o') {
+                console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
+                draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
+            }
         }
     }
 }
@@ -139,8 +151,8 @@ function placeSymbol(outerCell, innerCell) {
 
 
 
-function check_InnerTableWin(innerTable_position_history) {
-    let flattened_innerTable_position_history = FlattenArrayDimension(innerTable_position_history);
+function check_TableWin(Table_position_history) {
+    let flattened_Table_position_history = FlattenArrayDimension(Table_position_history);
     let winningCoordinates = [
         ['horizontal', 0, 1, 2],
         ['horizontal', 3, 4, 5],
@@ -155,15 +167,15 @@ function check_InnerTableWin(innerTable_position_history) {
     ];
     for (let i = 0; i < winningCoordinates.length; i++) {
         let [victoryType, coord1, coord2, coord3] = winningCoordinates[i];
-        if (flattened_innerTable_position_history[coord1] === 'x' && flattened_innerTable_position_history[coord2] === 'x' && flattened_innerTable_position_history[coord3] === 'x') {
+        if (flattened_Table_position_history[coord1] === 'x' && flattened_Table_position_history[coord2] === 'x' && flattened_Table_position_history[coord3] === 'x') {
             return { result: 'x', type: victoryType, winningCoords: [coord1, coord2, coord3] };
-        } else if (flattened_innerTable_position_history[coord1] === 'o' && flattened_innerTable_position_history[coord2] === 'o' && flattened_innerTable_position_history[coord3] === 'o') {
+        } else if (flattened_Table_position_history[coord1] === 'o' && flattened_Table_position_history[coord2] === 'o' && flattened_Table_position_history[coord3] === 'o') {
             return { result: 'o', type: victoryType, winningCoords: [coord1, coord2, coord3] };
         }
     }
 
     // Check for a tie (no empty spaces left)
-    if (!flattened_innerTable_position_history.includes('')) {
+    if (!flattened_Table_position_history.includes('')) {
         return { result: 'Tie', type: 'TIE' };
     }
 
@@ -183,7 +195,7 @@ function check_InnerTableWin(innerTable_position_history) {
 
 
 
-function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
+function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoords) {
     let innerTable = outerCell.querySelector('.inner-game-table');
     let innerTableBody = innerTable.querySelector("tbody");
 
@@ -249,6 +261,10 @@ function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
         outerCell.innerHTML = symbols[winner];
         outerCell.style.opacity = '1';
     }, 4000);
+}
+
+function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
+
 }
 
 
