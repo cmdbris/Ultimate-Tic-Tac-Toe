@@ -185,14 +185,18 @@ function check_InnerTableWin(innerTable_position_history) {
 
 function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
     let innerTable = outerCell.querySelector('.inner-game-table');
+    let innerTableBody = innerTable.querySelector("tbody");
 
     // let centredContainer = document.querySelector('.winning-line-container');
     // let winningLine = document.querySelector('.winning-line');
 
     let centredContainer = document.createElement('div');
-    centredContainer.classList.add('winning-line-container');
-
     let winningLine = document.createElement('div');
+
+    centredContainer.appendChild(winningLine);
+    innerTableBody.appendChild(centredContainer);
+
+    centredContainer.classList.add('winning-line-container');
     winningLine.classList.add('winning-line');
 
     if (winner === 'x') {
@@ -228,9 +232,6 @@ function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
             winningLine.style.setProperty('--winning-line-angle', '-45deg');
         }
     }
-
-    centredContainer.appendChild(winningLine);
-    innerTable.appendChild(centredContainer);
     
     setTimeout(() => {
         winningLine.style.width = '70px';
@@ -238,10 +239,16 @@ function drawWinningLine(outerCell, winner, victoryType, winningCoords) {
     setTimeout(() => {
         outerCell.classList.remove('zoomed');
         innerTable.classList.remove('zoomed');
-    }, 2000);
-    // setTimeout(() => {
-    //     innerTable.remove();
-    // }, 4000);
+    }, 2500);
+    setTimeout(() => {
+        outerCell.style.opacity = '0';
+        innerTable.style.opacity = '0';
+    }, 2750);
+    setTimeout(() => {
+        outerCell.classList.add('winning-cell');
+        outerCell.innerHTML = symbols[winner];
+        outerCell.style.opacity = '1';
+    }, 4000);
 }
 
 
