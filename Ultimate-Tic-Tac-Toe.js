@@ -32,7 +32,7 @@ let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
         if (!outerCell.classList.contains('winning-cell')) {
-        toggleZoom(outerCell);
+            toggleZoom(outerCell);
         }
     });
 
@@ -71,8 +71,10 @@ function toggleZoom(outerCell) {
     outerTableCell.forEach(otherOuterCell => {
         if (otherOuterCell !== outerCell) {
             let otherInnerTable = otherOuterCell.querySelector('.inner-game-table');
-            otherOuterCell.classList.remove('zoomed');
-            otherInnerTable.classList.remove('zoomed');
+            if (otherOuterCell.classList.contains('zoomed') && otherInnerTable.classList.contains('zoomed')) {
+                otherOuterCell.classList.remove('zoomed');
+                otherInnerTable.classList.remove('zoomed');
+            }
         }
     });
 }
@@ -244,7 +246,7 @@ function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoor
             winningLine.style.setProperty('--winning-line-angle', '-45deg');
         }
     }
-    
+
     setTimeout(() => {
         winningLine.style.width = '70px';
     }, 10);
@@ -264,7 +266,56 @@ function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoor
 }
 
 function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
+    setTimeout(() => {
+        let outerTable = document.querySelector('.outer-game-table');
 
+        let centredContainer = document.createElement('div');
+        let deluxeWinningLine = document.createElement('div');
+
+        centredContainer.appendChild(deluxeWinningLine);
+        outerTable.appendChild(centredContainer);
+
+        centredContainer.classList.add('winning-line-container');
+        deluxeWinningLine.classList.add('deluxe-winning-line');
+
+        // if (winner === 'x') {
+        //     deluxeWinningLine.style.setProperty('--winning-line-color', 'rgb(255, 82, 82)');
+        // }
+        // else if (winner === 'o') {
+        //     deluxeWinningLine.style.setProperty('--winning-line-color', 'rgb(73, 205, 245)');
+        // }
+
+        if (victoryType === 'horizontal') {
+            deluxeWinningLine.style.setProperty('--winning-line-angle', '0deg');
+            if (winningCoords[0] === 0) {
+                deluxeWinningLine.style.setProperty('--winning-line-y-translation', '150px');
+            }
+            else if (winningCoords[0] === 6) {
+                deluxeWinningLine.style.setProperty('--winning-line-y-translation', '-150px');
+            }
+        }
+        else if (victoryType === 'vertical') {
+            deluxeWinningLine.style.setProperty('--winning-line-angle', '90deg');
+            if (winningCoords[0] === 0) {
+                deluxeWinningLine.style.setProperty('--winning-line-x-translation', '-150px');
+            }
+            else if (winningCoords[0] === 2) {
+                deluxeWinningLine.style.setProperty('--winning-line-x-translation', '150px');
+            }
+        }
+        else if (victoryType === 'diagonal') {
+            if (winningCoords[0] === 0) {
+                deluxeWinningLine.style.setProperty('--winning-line-angle', '45deg');
+            }
+            else if (winningCoords[0] === 2) {
+                deluxeWinningLine.style.setProperty('--winning-line-angle', '-45deg');
+            }
+        }
+
+        setTimeout(() => {
+            deluxeWinningLine.style.width = '450px';
+        }, 10);
+    }, 5500);
 }
 
 
