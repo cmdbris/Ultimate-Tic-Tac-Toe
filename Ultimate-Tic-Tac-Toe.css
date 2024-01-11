@@ -249,7 +249,7 @@ section.coin-container {
     height: 300px;
     transform-style: preserve-3d;
     display: block;
-    transition: all 1000ms ease-in;
+    transition: opacity 1000ms ease-in;
 }
 
 div.coin > div.front-side,
@@ -286,11 +286,13 @@ div.coin > div.back-side {
 }
 
 div.coin.heads {
-    animation: flipHeads 3s ease-out forwards;
+    animation: flipHeads 3s ease-out;
+    animation-fill-mode: forwards;
 }
 
 div.coin.tails {
-    animation: flipTails 3s ease-out forwards;
+    animation: flipTails 3s ease-out;
+    animation-fill-mode: forwards;
 }
 
 @keyframes flipHeads {
