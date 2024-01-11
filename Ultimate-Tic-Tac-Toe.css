@@ -8,6 +8,38 @@ body {
     padding: 0;
 }
 
+@property --gradient-color {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: rgba(255, 255, 255, 0.5);
+  }
+
+body {
+    --gradient-color: rgba(255, 255, 255, 0.5);
+    transition: --gradient-color 500ms;
+    background: linear-gradient(180deg, var(--gradient-color) 0%, rgba(255,255,255,1) 25%, rgba(255,255,255,1) 75%, var(--gradient-color) 100%);
+    height: 100vh;
+}
+
+/* body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+} */
+
+/* @keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+} */
+
 
 /* Default attributes */
 

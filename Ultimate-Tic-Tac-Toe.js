@@ -26,6 +26,7 @@ let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 let errorMessage = document.querySelector('.error-message');
 
+let body = document.querySelector('body');
 let outerTable = document.querySelector('.outer-game-table');
 let outerTableCell = document.querySelectorAll('.outer-game-table-cell');
 let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
@@ -42,10 +43,12 @@ outerTableCell.forEach(outerCell => {
             let [outerCell_row, outerCell_column] = extractRowColumn(outerCell.id.toString());
             let [innerCell_row, innerCell_column] = extractRowColumn(innerCell.id.toString());
             if (outerCell.classList.contains('zoomed') && innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] === '') {
-                if (player_1_turn) {
+                if (player_1_turn && !outerCell.classList.contains('winner')) {
+                    body.style.setProperty('--gradient-color', 'rgba(255, 82, 82, 0.5)');
                     innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(255, 82, 82, 0.5)');
                 }
-                if (player_2_turn) {
+                if (player_2_turn && !outerCell.classList.contains('winner')) {
+                    body.style.setProperty('--gradient-color', 'rgba(73, 205, 245, 0.5)');
                     innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(73, 205, 245, 0.5)');
                 }
             }
@@ -121,12 +124,18 @@ function placeSymbol(outerCell, innerCell) {
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(255, 82, 82)');
             innerCell.style.setProperty('--symbol-font-weight', 'bolder');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'x';
+            if (!outerCell.classList.contains('winner')){
+                body.style.setProperty('--gradient-color', 'rgba(73, 205, 245, 0.5)');
+            }
         }
         if (player_2_turn) {
             innerCell.innerHTML = symbols['o'];
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(73, 205, 245)');
             innerCell.style.setProperty('--symbol-font-weight', 'normal');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'o';
+            if (!outerCell.classList.contains('winner')){
+                body.style.setProperty('--gradient-color', 'rgba(255, 82, 82, 0.5)');
+            }
         }
         player_1_turn = !player_1_turn;
         player_2_turn = !player_2_turn;
@@ -135,6 +144,7 @@ function placeSymbol(outerCell, innerCell) {
 
         if ((inner_matchResult.result === 'x' || inner_matchResult.result === 'o') && !outerCell.classList.contains('winner')) {
             console.log(inner_matchResult.result, 'via', inner_matchResult.type, 'with winning coords:', inner_matchResult.winningCoords);
+            body.style.setProperty('--gradient-color', 'rgba(254, 241, 162, 1)');
             draw_innerTable_WinningLine(outerCell, inner_matchResult.result, inner_matchResult.type, inner_matchResult.winningCoords);
             outerCell_position_history[outerCell_row][outerCell_column] = inner_matchResult.result;
 
@@ -254,6 +264,7 @@ function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoor
         winningLine.style.width = '70px';
     }, 10);
     setTimeout(() => {
+        body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
         outerCell.classList.remove('zoomed');
         innerTable.classList.remove('zoomed');
     }, 2500);
