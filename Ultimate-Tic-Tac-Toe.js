@@ -25,6 +25,8 @@ let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 
 let errorMessage = document.querySelector('.error-message');
+let coin = document.getElementById('coin');
+let coinContainer = document.querySelector('.coin-container');
 
 let body = document.querySelector('body');
 let outerTable = document.querySelector('.outer-game-table');
@@ -155,6 +157,10 @@ function placeSymbol(outerCell, innerCell) {
                 outerCell.classList.remove('zoomed');
                 innerTable.classList.remove('zoomed');
             }, 500);
+            setTimeout(() => {
+                outerCell.style.opacity = '0';
+                innerTable.style.opacity = '0';
+            }, 750);
             let randomWinner = flipCoin();
             outerCell_position_history[outerCell_row][outerCell_column] = randomWinner;
             outerCell.classList.add('winner');
@@ -352,16 +358,19 @@ function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
 
 
 
+coinContainer.classList.add('disable');
+coinContainer.classList.add('visually-hidden');
+
 function flipCoin() {
-    let coin = document.getElementById('coin');
     coin.classList.remove('heads');
     coin.classList.remove('tails');
-    coin.classList.remove('disable');
+    coinContainer.classList.remove('disable');
 
+    // coin.style.display = 'block';
     let flipResult = Math.random();
 
-    setTimeout(() => {
-        coin.style.opacity = 1;
+    setTimeout(function () {
+        coinContainer.classList.remove('visually-hidden');
         setTimeout(() => {
             if (flipResult <= 0.5) {
                 coin.classList.add('heads');
@@ -372,7 +381,7 @@ function flipCoin() {
                 return 'o';
             }
         }, 1000);
-    }, 100);
+    }, 500);
 }
 
 

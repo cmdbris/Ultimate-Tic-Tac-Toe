@@ -242,12 +242,12 @@ section.coin-container {
 
 #coin {
     position: relative;
-    opacity: 0;
     margin: 0 auto;
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
     transform-style: preserve-3d;
-    transition: transform 1000ms ease-in;
+    display: block;
+    transition: all 1000ms ease-in;
 }
 
 #coin div {
@@ -261,23 +261,25 @@ section.coin-container {
 
 div.front-side {
     background-color: rgb(255, 82, 82);
+    border: 8px solid rgba(0,0,0,0.3);
     user-select: none;
     text-align: center;
     font-weight: bolder;
     text-shadow: -5px 2px 0px rgba(0,0,0,0.2);
-    line-height: 100px;
-    font-size: 80px;
+    line-height: 300px;
+    font-size: 250px;
 }
 
 div.back-side {
     background-color: rgb(73, 205, 245);
+    border: 8px solid rgba(0,0,0,0.3);
     transform: rotateY(-180deg);
     user-select: none;
     text-align: center;
     font-weight: normal;
     text-shadow: -5px 2px 4px rgba(0,0,0,0.2);
-    line-height: 100px;
-    font-size: 80px;
+    line-height: 300px;
+    font-size: 250px;
 }
 
 #coin.heads {
@@ -317,3 +319,7 @@ div.back-side {
 .disable {
     display: none;
 }
+
+.visually-hidden {
+    opacity: 0;
+  }
