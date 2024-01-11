@@ -383,6 +383,7 @@ function flipCoin() {
                 }, 5000);
                 setTimeout(() => {
                     coin.classList.add('disable');
+                    coin.classList.remove('heads');
                     return 'x';
                 }, 6000);
             }
@@ -396,7 +397,7 @@ function flipCoin() {
                     coin.classList.add('visually-hidden');
                 }, 5000);
                 setTimeout(() => {
-                    body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
+                    coin.classList.remove('tails');
                     coin.classList.add('disable');
                     return 'o';
                 }, 6000);
