@@ -369,19 +369,40 @@ function flipCoin() {
     // coin.style.display = 'block';
     let flipResult = Math.random();
 
-    setTimeout(function () {
+    setTimeout(() => {
         coin.classList.remove('visually-hidden');
         setTimeout(() => {
             if (flipResult <= 0.5) {
                 coin.classList.add('heads');
-                return 'x';
+                setTimeout(() => {
+                    body.style.setProperty('--gradient-color', 'rgba(255, 82, 82, 0.5)');
+                }, 3000);
+                setTimeout(() => {
+                    body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
+                    coin.classList.add('visually-hidden');
+                }, 5000);
+                setTimeout(() => {
+                    coin.classList.add('disable');
+                    return 'x';
+                }, 6000);
             }
             else {
                 coin.classList.add('tails');
-                return 'o';
+                setTimeout(() => {
+                    body.style.setProperty('--gradient-color', 'rgba(73, 205, 245, 0.5)');
+                }, 3000);
+                setTimeout(() => {
+                    body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
+                    coin.classList.add('visually-hidden');
+                }, 5000);
+                setTimeout(() => {
+                    body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
+                    coin.classList.add('disable');
+                    return 'o';
+                }, 6000);
             }
         }, 1000);
-    }, 500);
+    }, 1500);
 }
 
 
