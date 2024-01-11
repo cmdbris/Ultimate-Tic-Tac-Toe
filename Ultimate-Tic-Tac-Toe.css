@@ -49,7 +49,7 @@ section.game-table-container {
     transform: translate(-50%, -50%);
 }
 
-table.outer-game-table>tbody>tr>td.outer-game-table-cell {
+table.outer-game-table > tbody > tr > td.outer-game-table-cell {
     width: 150px;
     height: 150px;
     user-select: none;
@@ -58,7 +58,7 @@ table.outer-game-table>tbody>tr>td.outer-game-table-cell {
     font-size: 160px;
 }
 
-table.inner-game-table>tbody>tr>td.inner-game-table-cell {
+table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     width: 20px;
     height: 20px;
     user-select: none;
@@ -89,7 +89,7 @@ td.horizontal-border {
 
 
 
-table.outer-game-table>tbody>tr>td.outer-game-table-cell {
+table.outer-game-table > tbody > tr > td.outer-game-table-cell {
     color: var(--outer-game-table-cell-symbol-color);
     outline-style: solid;
     outline-width: 0px;
@@ -110,13 +110,13 @@ table.inner-game-table {
     transition: all 1000ms ease-in-out;
 }
 
-table.inner-game-table>tbody>tr>td.inner-game-table-cell {
+table.inner-game-table > tbody > tr > td.inner-game-table-cell {
     font-weight: var(--symbol-font-weight);
     color: var(--inner-game-table-cell-symbol-color);
     transition: background-color 500ms;
 }
 
-table.inner-game-table>tbody>tr>td.inner-game-table-cell:hover {
+table.inner-game-table > tbody > tr > td.inner-game-table-cell:hover {
     background-color: var(--inner-cell-hover-color);
 }
 
@@ -126,7 +126,7 @@ table.inner-game-table>tbody>tr>td.inner-game-table-cell:hover {
 
 
 
-table.outer-game-table>tbody>tr>td.outer-game-table-cell.zoomed {
+table.outer-game-table > tbody > tr > td.outer-game-table-cell.zoomed {
     transform: scale(2);
     outline-style: solid;
     outline-width: 2px;
@@ -192,7 +192,7 @@ div.deluxe-winning-line {
 
 
 
-table.outer-game-table>tbody>tr>td.outer-game-table-cell.winning-cell {
+table.outer-game-table > tbody > tr > td.outer-game-table-cell.winning-cell {
     opacity: 0;
     color: rgb(120, 50, 5);
     text-shadow: 0 3px 3px rgba(188, 168, 133, 1);
@@ -250,7 +250,8 @@ section.coin-container {
     transition: all 1000ms ease-in;
 }
 
-.coin div {
+div.coin > div.front-side,
+div.coin > div.back-side {
     position: absolute;
     backface-visibility: hidden;
     width: 100%;
@@ -259,7 +260,7 @@ section.coin-container {
     box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
 }
 
-div.front-side {
+div.coin > div.front-side {
     background-color: rgb(255, 82, 82);
     border: 8px solid rgba(0,0,0,0.3);
     user-select: none;
@@ -270,7 +271,7 @@ div.front-side {
     font-size: 250px;
 }
 
-div.back-side {
+div.coin > div.back-side {
     background-color: rgb(73, 205, 245);
     border: 8px solid rgba(0,0,0,0.3);
     transform: rotateY(-180deg);
@@ -282,11 +283,11 @@ div.back-side {
     font-size: 250px;
 }
 
-.coin.heads {
+div.coin.heads {
     animation: flipHeads 3s ease-out forwards;
 }
 
-.coin.tails {
+div.coin.tails {
     animation: flipTails 3s ease-out forwards;
 }
 
