@@ -240,7 +240,7 @@ section.coin-container {
     transform: translate(-50%, -50%);
 }
 
-#coin {
+.coin {
     position: relative;
     margin: 0 auto;
     width: 300px;
@@ -250,7 +250,7 @@ section.coin-container {
     transition: all 1000ms ease-in;
 }
 
-#coin div {
+.coin div {
     position: absolute;
     backface-visibility: hidden;
     width: 100%;
@@ -282,11 +282,11 @@ div.back-side {
     font-size: 250px;
 }
 
-#coin.heads {
+.coin.heads {
     animation: flipHeads 3s ease-out forwards;
 }
 
-#coin.tails {
+.coin.tails {
     animation: flipTails 3s ease-out forwards;
 }
 

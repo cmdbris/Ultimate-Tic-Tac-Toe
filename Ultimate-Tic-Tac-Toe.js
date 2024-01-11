@@ -25,7 +25,7 @@ let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 
 let errorMessage = document.querySelector('.error-message');
-let coin = document.getElementById('coin');
+let coin = document.querySelector('.coin');
 let coinContainer = document.querySelector('.coin-container');
 
 let body = document.querySelector('body');
@@ -358,19 +358,19 @@ function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
 
 
 
-coinContainer.classList.add('disable');
-coinContainer.classList.add('visually-hidden');
+coin.classList.add('disable');
+coin.classList.add('visually-hidden');
 
 function flipCoin() {
     coin.classList.remove('heads');
     coin.classList.remove('tails');
-    coinContainer.classList.remove('disable');
+    coin.classList.remove('disable');
 
     // coin.style.display = 'block';
     let flipResult = Math.random();
 
     setTimeout(function () {
-        coinContainer.classList.remove('visually-hidden');
+        coin.classList.remove('visually-hidden');
         setTimeout(() => {
             if (flipResult <= 0.5) {
                 coin.classList.add('heads');
