@@ -26,12 +26,13 @@ let symbols = { 'x': '&#215;', 'o': '&#9900;' };
 
 let errorMessage = document.querySelector('.error-message');
 
+let outerTable = document.querySelector('.outer-game-table');
 let outerTableCell = document.querySelectorAll('.outer-game-table-cell');
 let innerTableCell = document.querySelectorAll('.inner-game-table-cell');
 
 outerTableCell.forEach(outerCell => {
     outerCell.addEventListener('click', function () {
-        if (!outerCell.classList.contains('winning-cell')) {
+        if (!outerCell.classList.contains('winner') && !outerTable.classList.contains('winner')) {
             toggleZoom(outerCell);
         }
     });
@@ -50,7 +51,7 @@ outerTableCell.forEach(outerCell => {
             }
         });
         innerCell.addEventListener('click', function () {
-            if (outerCell.classList.contains('zoomed') && !outerCell.classList.contains('winning-cell')) {
+            if (outerCell.classList.contains('zoomed') && !outerCell.classList.contains('winner')) {
                 innerCell.style.setProperty('--inner-cell-hover-color', 'rgba(0, 0, 0, 0)');
                 placeSymbol(outerCell, this);
             }
@@ -132,14 +133,14 @@ function placeSymbol(outerCell, innerCell) {
 
         let inner_matchResult = check_TableWin(innerTable_position_history[outerCell_row][outerCell_column]);
 
-        if (inner_matchResult.result === 'x' || inner_matchResult.result === 'o') {
+        if ((inner_matchResult.result === 'x' || inner_matchResult.result === 'o') && !outerCell.classList.contains('winner')) {
             console.log(inner_matchResult.result, 'via', inner_matchResult.type, 'with winning coords:', inner_matchResult.winningCoords);
             draw_innerTable_WinningLine(outerCell, inner_matchResult.result, inner_matchResult.type, inner_matchResult.winningCoords);
             outerCell_position_history[outerCell_row][outerCell_column] = inner_matchResult.result;
 
             let outer_matchResult = check_TableWin(outerCell_position_history);
 
-            if (outer_matchResult.result === 'x' || outer_matchResult.result === 'o') {
+            if ((outer_matchResult.result === 'x' || outer_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
                 console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
                 draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
             }
@@ -198,6 +199,8 @@ function check_TableWin(Table_position_history) {
 
 
 function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoords) {
+    outerCell.classList.add('winner');
+
     let innerTable = outerCell.querySelector('.inner-game-table');
     let innerTableBody = innerTable.querySelector("tbody");
 
@@ -266,9 +269,8 @@ function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoor
 }
 
 function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
+    outerTable.classList.add('winner');
     setTimeout(() => {
-        let outerTable = document.querySelector('.outer-game-table');
-
         let centredContainer = document.createElement('div');
         let deluxeWinningLine = document.createElement('div');
 
