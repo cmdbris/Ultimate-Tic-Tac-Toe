@@ -124,7 +124,7 @@ function placeSymbol(outerCell, innerCell) {
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(255, 82, 82)');
             innerCell.style.setProperty('--symbol-font-weight', 'bolder');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'x';
-            if (!outerCell.classList.contains('winner')){
+            if (!outerCell.classList.contains('winner')) {
                 body.style.setProperty('--gradient-color', 'rgba(73, 205, 245, 0.5)');
             }
         }
@@ -133,7 +133,7 @@ function placeSymbol(outerCell, innerCell) {
             innerCell.style.setProperty('--inner-game-table-cell-symbol-color', 'rgb(73, 205, 245)');
             innerCell.style.setProperty('--symbol-font-weight', 'normal');
             innerTable_position_history[outerCell_row][outerCell_column][innerCell_row][innerCell_column] = 'o';
-            if (!outerCell.classList.contains('winner')){
+            if (!outerCell.classList.contains('winner')) {
                 body.style.setProperty('--gradient-color', 'rgba(255, 82, 82, 0.5)');
             }
         }
@@ -147,13 +147,28 @@ function placeSymbol(outerCell, innerCell) {
             body.style.setProperty('--gradient-color', 'rgba(254, 241, 162, 1)');
             draw_innerTable_WinningLine(outerCell, inner_matchResult.result, inner_matchResult.type, inner_matchResult.winningCoords);
             outerCell_position_history[outerCell_row][outerCell_column] = inner_matchResult.result;
+        }
+        else if (inner_matchResult.result === 'Tie') {
+            let innerTable = outerCell.querySelector('.inner-game-table');
+            setTimeout(() => {
+                body.style.setProperty('--gradient-color', 'rgba(255, 255, 255, 0.5)');
+                outerCell.classList.remove('zoomed');
+                innerTable.classList.remove('zoomed');
+            }, 500);
+            let randomWinner = flipCoin();
+            outerCell_position_history[outerCell_row][outerCell_column] = randomWinner;
+            outerCell.classList.add('winner');
+        }
 
-            let outer_matchResult = check_TableWin(outerCell_position_history);
+        let outer_matchResult = check_TableWin(outerCell_position_history);
 
-            if ((outer_matchResult.result === 'x' || outer_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
-                console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
-                draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
-            }
+        if ((outer_matchResult.result === 'x' || outer_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
+            console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
+            draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
+        }
+        else if (outer_matchResult.result === 'Tie') {
+            let randomWinner = flipCoin();
+            outerTable.classList.add('winner');
         }
     }
 }
@@ -329,6 +344,35 @@ function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
             deluxeWinningLine.style.width = '450px';
         }, 10);
     }, 5500);
+}
+
+
+
+// Tie Breaker Function -----> Flips Coin to Determine Winner
+
+
+
+function flipCoin() {
+    let coin = document.getElementById('coin');
+    coin.classList.remove('heads');
+    coin.classList.remove('tails');
+    coin.classList.remove('disable');
+
+    let flipResult = Math.random();
+
+    setTimeout(() => {
+        coin.style.opacity = 1;
+        setTimeout(() => {
+            if (flipResult <= 0.5) {
+                coin.classList.add('heads');
+                return 'x';
+            }
+            else {
+                coin.classList.add('tails');
+                return 'o';
+            }
+        }, 1000);
+    }, 100);
 }
 
 
