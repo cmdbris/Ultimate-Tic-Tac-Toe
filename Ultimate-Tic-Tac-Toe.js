@@ -161,8 +161,7 @@ function placeSymbol(outerCell, innerCell) {
                 outerCell.style.opacity = '0';
                 innerTable.style.opacity = '0';
             }, 750);
-            let randomWinner = flipCoin();
-            outerCell_position_history[outerCell_row][outerCell_column] = randomWinner;
+            let randomWinner = flipCoin(outerCell, outerCell_row, outerCell_column, 'innerTable');
             outerCell.classList.add('winner');
         }
 
@@ -173,8 +172,13 @@ function placeSymbol(outerCell, innerCell) {
             draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
         }
         else if (outer_matchResult.result === 'Tie') {
-            let randomWinner = flipCoin();
+            let randomWinner = flipCoin(outerCell, outerCell_row, outerCell_column, 'outerTable');
             outerTable.classList.add('winner');
+            let post_Tie_matchResult = check_TableWin(outerCell_position_history);
+            if ((post_Tie_matchResult.result === 'x' || post_Tie_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
+                console.log(post_Tie_matchResult.result, 'via', post_Tie_matchResult.type, 'with winning coords:', post_Tie_matchResult.winningCoords);
+                draw_outerTable_WinningLine(post_Tie_matchResult.result, post_Tie_matchResult.type, post_Tie_matchResult.winningCoords);
+            }
         }
     }
 }
@@ -294,9 +298,7 @@ function draw_innerTable_WinningLine(outerCell, winner, victoryType, winningCoor
         innerTable.style.opacity = '0';
     }, 2750);
     setTimeout(() => {
-        outerCell.classList.add('winning-cell');
-        outerCell.innerHTML = symbols[winner];
-        outerCell.style.opacity = '1';
+        placeWinningCell(outerCell, winner);
     }, 4000);
 }
 
@@ -354,6 +356,18 @@ function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
 
 
 
+// 
+
+
+
+function placeWinningCell(outerCell, winner) {
+    outerCell.classList.add('winning-cell');
+    outerCell.innerHTML = symbols[winner];
+    outerCell.style.opacity = '1';
+}
+
+
+
 // Tie Breaker Function -----> Flips Coin to Determine Winner
 
 
@@ -361,7 +375,7 @@ function draw_outerTable_WinningLine(winner, victoryType, winningCoords) {
 coin.classList.add('disable');
 coin.classList.add('visually-hidden');
 
-function flipCoin() {
+function flipCoin(outerCell, outerCell_row, outerCell_column, table) {
     coin.classList.remove('heads');
     coin.classList.remove('tails');
     coin.classList.remove('disable');
@@ -384,7 +398,9 @@ function flipCoin() {
                 setTimeout(() => {
                     coin.classList.add('disable');
                     coin.classList.remove('heads');
-                    return 'x';
+                    if (table === 'innerTable') {
+                        placeWinningCell(outerCell, 'x');
+                    }
                 }, 6000);
             }
             else {
@@ -399,11 +415,25 @@ function flipCoin() {
                 setTimeout(() => {
                     coin.classList.remove('tails');
                     coin.classList.add('disable');
-                    return 'o';
+                    if (table === 'innerTable') {
+                        placeWinningCell(outerCell, 'o');
+                    }
                 }, 6000);
             }
         }, 1000);
     }, 1500);
+    if (flipResult <= 0.5) {
+        if (table === 'innerTable') {
+            outerCell_position_history[outerCell_row][outerCell_column] = 'x';
+        }
+        return 'x';
+    }
+    else {
+        if (table === 'innerTable') {
+            outerCell_position_history[outerCell_row][outerCell_column] = 'o';
+        }
+        return 'o';
+    }
 }
 
 
