@@ -161,7 +161,9 @@ function placeSymbol(outerCell, innerCell) {
                 outerCell.style.opacity = '0';
                 innerTable.style.opacity = '0';
             }, 750);
-            let randomWinner = flipCoin(outerCell, outerCell_row, outerCell_column, 'innerTable');
+            let randomWinner = flipCoin(outerCell, 'innerTable');
+            outerCell_position_history[outerCell_row][outerCell_column] = randomWinner;
+            console.log(outerCell_position_history);
             outerCell.classList.add('winner');
         }
 
@@ -375,7 +377,7 @@ function placeWinningCell(outerCell, winner) {
 coin.classList.add('disable');
 coin.classList.add('visually-hidden');
 
-function flipCoin(outerCell, outerCell_row, outerCell_column, table) {
+function flipCoin(outerCell, table) {
     coin.classList.remove('heads');
     coin.classList.remove('tails');
     coin.classList.remove('disable');
@@ -423,15 +425,9 @@ function flipCoin(outerCell, outerCell_row, outerCell_column, table) {
         }, 1000);
     }, 1500);
     if (flipResult <= 0.5) {
-        if (table === 'innerTable') {
-            outerCell_position_history[outerCell_row][outerCell_column] = 'x';
-        }
         return 'x';
     }
     else {
-        if (table === 'innerTable') {
-            outerCell_position_history[outerCell_row][outerCell_column] = 'o';
-        }
         return 'o';
     }
 }
