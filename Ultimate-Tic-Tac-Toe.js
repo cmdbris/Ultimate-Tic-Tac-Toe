@@ -170,17 +170,19 @@ function placeSymbol(outerCell, innerCell) {
         let outer_matchResult = check_TableWin(outerCell_position_history);
 
         if ((outer_matchResult.result === 'x' || outer_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
-            console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
+            // console.log(outer_matchResult.result, 'via', outer_matchResult.type, 'with winning coords:', outer_matchResult.winningCoords);
             draw_outerTable_WinningLine(outer_matchResult.result, outer_matchResult.type, outer_matchResult.winningCoords);
         }
         else if (outer_matchResult.result === 'Tie') {
             let randomWinner = flipCoin(outerCell, outerCell_row, outerCell_column, 'outerTable');
             outerTable.classList.add('winner');
-            let post_Tie_matchResult = check_TableWin(outerCell_position_history);
-            if ((post_Tie_matchResult.result === 'x' || post_Tie_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
-                console.log(post_Tie_matchResult.result, 'via', post_Tie_matchResult.type, 'with winning coords:', post_Tie_matchResult.winningCoords);
-                draw_outerTable_WinningLine(post_Tie_matchResult.result, post_Tie_matchResult.type, post_Tie_matchResult.winningCoords);
-            }
+            // let post_Tie_matchResult = check_TableWin(outerCell_position_history);
+            // if ((post_Tie_matchResult.result === 'x' || post_Tie_matchResult.result === 'o') && !outerTable.classList.contains('winner')) {
+            //     // console.log(post_Tie_matchResult.result, 'via', post_Tie_matchResult.type, 'with winning coords:', post_Tie_matchResult.winningCoords);
+            //     setTimeout(() => {
+            //         draw_outerTable_WinningLine(post_Tie_matchResult.result, post_Tie_matchResult.type, post_Tie_matchResult.winningCoords);
+            //     }, 15000);
+            // }
         }
     }
 }
